@@ -1,6 +1,11 @@
 {
     "version": 2,
-    "functions": { "api": { "runtime": "python3.10", "memory": 512 } },
+    "functions": { 
+        "api": { 
+            "runtime": "now-python@3.10.0", 
+            "memory": 512 
+        } 
+    },
     "routes": [
         { "src": "/predict_api", "dest": "/api/predict_api" },
         { "src": "/predict", "dest": "/api/predict" },
