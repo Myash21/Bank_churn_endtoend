@@ -1,11 +1,13 @@
-import joblib
+# app.py
+
+import pickle
 from flask import Flask, jsonify, render_template, request
 import numpy as np
 
 app = Flask(__name__)
 
 # Load the model
-classmodel = None  # Load model dynamically
+classmodel = pickle.load(open('bank_churn.pkl', 'rb'))
 
 # Home page
 @app.route('/')
@@ -15,9 +17,6 @@ def home():
 # API endpoint for prediction
 @app.route('/predict_api', methods=['POST'])
 def predict_api():
-    global classmodel
-    if classmodel is None:
-        classmodel = joblib.load('bank_churn.joblib')
     data = request.json['data']
     input_data = np.array(list(data.values())).reshape(1, -1)
     output = classmodel.predict(input_data)
@@ -27,9 +26,6 @@ def predict_api():
 # Prediction route
 @app.route('/predict', methods=['POST'])
 def predict():
-    global classmodel
-    if classmodel is None:
-        classmodel = joblib.load('bank_churn.joblib')
     data = [float(x) for x in request.form.values()]
     final_input = np.array(data).reshape(1, -1)
     output = classmodel.predict(final_input)[0]
