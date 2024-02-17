@@ -29,7 +29,11 @@ def predict():
     data = [float(x) for x in request.form.values()]
     final_input = np.array(data).reshape(1, -1)
     output = classmodel.predict(final_input)[0]
-    return render_template("home.html", prediction_text="The prediction is {}".format(output))
+    
+    # Modify prediction text based on output value
+    prediction_text = "Bank churn likely" if output == 1 else "Bank churn unlikely"
+    
+    return render_template("home.html", prediction_text=prediction_text)
 
 if __name__ == "__main__":
     app.run(debug=True)
