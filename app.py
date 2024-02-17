@@ -1,25 +1,35 @@
+# app.py
+
 import pickle
-from flask import Flask, jsonify, render_template, url_for, app, request
-import pandas as pd
+from flask import Flask, jsonify, render_template, request
 import numpy as np
 
-#Load the model
 app = Flask(__name__)
-classmodel = pickle.load(open('bank_churn.pkl','rb'))
 
-#home page
+# Load the model
+classmodel = pickle.load(open('bank_churn.pkl', 'rb'))
+
+# Home page
 @app.route('/')
 def home():
     return render_template('home.html')
 
+# API endpoint for prediction
 @app.route('/predict_api', methods=['POST'])
 def predict_api():
     data = request.json['data']
-    print(data)
-    input_data = np.array(list(data.values())).reshape(1,-1)
+    input_data = np.array(list(data.values())).reshape(1, -1)
     output = classmodel.predict(input_data)
     output_value = int(output)
     return jsonify(output_value)
 
-if __name__=="__main__":
+# Prediction route
+@app.route('/predict', methods=['POST'])
+def predict():
+    data = [float(x) for x in request.form.values()]
+    final_input = np.array(data).reshape(1, -1)
+    output = classmodel.predict(final_input)[0]
+    return render_template("home.html", prediction_text="The prediction is {}".format(output))
+
+if __name__ == "__main__":
     app.run(debug=True)
