@@ -84,5 +84,8 @@ def main():
             prediction = predict_churn(data)
             st.write("Prediction:", prediction)
 
+# Wrap Streamlit app with a WSGI callable
+app = st.wsgi_app()
+
 if __name__ == "__main__":
     main()
