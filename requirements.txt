@@ -1,5 +1,7 @@
+Gunicorn
 pandas==2.0.0
 numpy==1.25.2
 matplotlib==3.8.0
 scikit-learn==1.4.0
 streamlit
+
