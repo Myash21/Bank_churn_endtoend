@@ -1,8 +1,0 @@
-[build]
-  command = "pip install -r requirements.txt -t site-packages && python app.py"
-  publish = "site"
-
-[[redirects]]
-  from = "/*"
-  to = "/.netlify/functions/server"
-  status = 200
