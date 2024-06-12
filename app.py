@@ -85,7 +85,6 @@ def main():
             st.write("Prediction:", prediction)
 
 # Wrap Streamlit app with a WSGI callable
-app = st.wsgi_app()
 
 if __name__ == "__main__":
     main()
